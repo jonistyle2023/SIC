@@ -4,6 +4,17 @@
 > 
 > Este proyecto no está finalizado
 
+>[!NOTE]
+>
+> Este programa permite realizar lo siguiente:
+> - Registrar datos.
+> - Consultar registros.
+> - Modificar registros.
+> - Eliminar registro.
+> - Registrar usuario.
+>
+> Si deseas colaborar con el proyecto, puedes hacerlo.
+
 ---
 
 ## **Características**
