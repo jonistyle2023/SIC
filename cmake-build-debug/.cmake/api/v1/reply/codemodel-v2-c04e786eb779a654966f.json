@@ -15,7 +15,8 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -30,7 +31,8 @@
 					"name" : "SIC",
 					"targetIndexes" : 
 					[
-						0
+						0,
+						1
 					]
 				}
 			],
@@ -41,6 +43,13 @@
 					"id" : "SIC::@6890427a1f51a3e7e1df",
 					"jsonFile" : "target-SIC-Debug-165cc0e8ba1dd0003bc3.json",
 					"name" : "SIC",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "withArrays::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-withArrays-Debug-2eda3f5b8de80dea7639.json",
+					"name" : "withArrays",
 					"projectIndex" : 0
 				}
 			]

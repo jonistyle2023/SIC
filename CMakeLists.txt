@@ -11,3 +11,6 @@ add_executable(SIC main.cpp)
 
 # Enlazar la biblioteca MySQL
 target_link_libraries(SIC libmysql)
+
+# Ejecutable del programa con Arrays
+add_executable(withArrays withArrays/sicArrays.cpp)

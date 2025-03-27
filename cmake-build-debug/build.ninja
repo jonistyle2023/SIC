@@ -75,6 +75,41 @@ build SIC.exe: CXX_EXECUTABLE_LINKER__SIC_Debug CMakeFiles/SIC.dir/main.cpp.obj
   TARGET_IMPLIB = libSIC.dll.a
   TARGET_PDB = SIC.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target withArrays
+
+
+#############################################
+# Order-only phony target for withArrays
+
+build cmake_object_order_depends_target_withArrays: phony || .
+
+build CMakeFiles/withArrays.dir/withArrays/sicArrays.cpp.obj: CXX_COMPILER__withArrays_unscanned_Debug C$:/Users/jonat/CLionProjects/SIC/withArrays/sicArrays.cpp || cmake_object_order_depends_target_withArrays
+  DEP_FILE = CMakeFiles\withArrays.dir\withArrays\sicArrays.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -I"C:/Program Files/MySQL/MySQL Server 9.2/include"
+  OBJECT_DIR = CMakeFiles\withArrays.dir
+  OBJECT_FILE_DIR = CMakeFiles\withArrays.dir\withArrays
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target withArrays
+
+
+#############################################
+# Link the executable withArrays.exe
+
+build withArrays.exe: CXX_EXECUTABLE_LINKER__withArrays_Debug CMakeFiles/withArrays.dir/withArrays/sicArrays.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_PATH = -LC:/PROGRA~1/MySQL/MYSQLS~1.2/lib
+  OBJECT_DIR = CMakeFiles\withArrays.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = withArrays.exe
+  TARGET_IMPLIB = libwithArrays.dll.a
+  TARGET_PDB = withArrays.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -103,6 +138,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build SIC: phony SIC.exe
 
+build withArrays: phony withArrays.exe
+
 # =============================================================================
 # Folder targets.
 
@@ -111,7 +148,7 @@ build SIC: phony SIC.exe
 #############################################
 # Folder: C:/Users/jonat/CLionProjects/SIC/cmake-build-debug
 
-build all: phony SIC.exe
+build all: phony SIC.exe withArrays.exe
 
 # =============================================================================
 # Built-in targets
