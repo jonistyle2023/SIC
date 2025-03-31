@@ -1,16 +1,26 @@
 //
-// Created by jonat on 27/3/2025.
+// Created by Jonathan David Panchana Rodríguez on 27/3/2025.
 //
+
+// Bloque de declaraciones
+// Declaramos las librerías necesarias para el programa
 #include <iostream>
 #include <limits>
 #include <iomanip>
 #include <string>
 
+// Librerias para hacer uso de las tildes
+#include <clocale>
+#include <windows.h>
+
+// Espacio de nombres
 using namespace std;
 
+// Definimos las constantes para el tamaño máximo de incidencias y usuarios
 const int MAX_INCIDENTES = 100;
 const int MAX_USUARIOS = 100;
 
+// Definimos las estructuras para Incidencia y Usuario, que son con las que vamos a trabajar
 struct Incidencia {
     int id;
     string titulo;
@@ -29,11 +39,13 @@ struct Usuario {
     string rol;
 };
 
+// Definimos los arreglos para almacenar las incidencias y usuarios
 Incidencia incidencias[MAX_INCIDENTES];
 Usuario usuarios[MAX_USUARIOS];
 int totalIncidencias = 0;
 int totalUsuarios = 0;
 
+// Funciones para manejar incidencias y usuarios
 void registrarIncidencia() {
     if (totalIncidencias >= MAX_INCIDENTES) {
         cout << "No se pueden registrar más incidencias." << endl;
@@ -71,6 +83,7 @@ void registrarIncidencia() {
     cout << "¡Incidencia registrada exitosamente!" << endl;
 }
 
+// Función para eliminar una incidencia
 void eliminarIncidencia() {
     int id;
     cout << "Digite el ID de la incidencia a eliminar: ";
@@ -89,6 +102,7 @@ void eliminarIncidencia() {
     cout << "Incidencia no encontrada." << endl;
 }
 
+// Función para mostrar todas las incidencias registradas
 void listarIncidencias() {
     cout << "+--------+----------------------+----------------------+----------------------+----------------------+----------+" << endl;
     cout << "|   ID   |        Título        |     Descripción      |         Tipo         |      Ubicación       |  Estado  |" << endl;
@@ -105,6 +119,7 @@ void listarIncidencias() {
     }
 }
 
+// Función para registrar un nuevo usuario
 void registrarUsuario() {
     if (totalUsuarios >= MAX_USUARIOS) {
         cout << "No se pueden registrar más usuarios." << endl;
@@ -131,8 +146,14 @@ void registrarUsuario() {
     cout << "¡Usuario registrado exitosamente!" << endl;
 }
 
+// Función principal
 int main() {
-    int opcion;
+
+    SetConsoleOutputCP(65001); // Para poder hacer uso de las tildes
+    SetConsoleCP(65001);       // UTF-8 para entrada
+    setlocale(LC_ALL, "es_ES.UTF-8");
+
+    int op;
 
     do {
         cout << "\n+-----------------------------+\n";
@@ -145,9 +166,9 @@ int main() {
         cout << "| 5 | Salir                   |\n";
         cout << "+-----------------------------+\n";
         cout << "Seleccione una opción: ";
-        cin >> opcion;
+        cin >> op;
 
-        switch (opcion) {
+        switch (op) {
             case 1: registrarIncidencia(); break;
             case 2: eliminarIncidencia(); break;
             case 3: listarIncidencias(); break;
@@ -155,7 +176,7 @@ int main() {
             case 5: cout << "Saliendo..." << endl; break;
             default: cout << "Opción no válida." << endl; break;
         }
-    } while (opcion != 5);
+    } while (op != 5);
 
     return 0;
 }

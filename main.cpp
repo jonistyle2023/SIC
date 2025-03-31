@@ -4,7 +4,7 @@
 // ██   ██    ██    ██     ██   ██ ██    ██ ██  ██ ██ ██      ██    ██       ██    ██      ██      ██      ████  ██ ██           ██
 // ██████     ██            █████   ██████  ██   ████ ██ ███████    ██       ██    ███████ ███████ ███████  ██████  ███████ ██████
 
-// Created by jonathan Panchana on 23/3/2025.
+// Created by jonathan Panchana Rodríguez on 23/3/2025.
 
 // Definimos las librerías antes que nada.
 #include <iostream>
@@ -61,7 +61,7 @@ int main() {
     system("cls");
 
     setColor(6);
-    std::cout << "\t  ____  _     _                             _        _            _     _                 _           \n";
+    std::cout << "\n\t  ____  _     _                             _        _            _     _                 _           \n";
     std::cout << "\t / ___|(_)___| |_ ___ _ __ ___   __ _    __| | ___  (_)_ __   ___(_) __| | ___ _ __   ___(_) __ _ ___ \n";
     std::cout << "\t \\___ \\| / __| __/ _ \\ '_ ` _ \\ / _` |  / _` |/ _ \\ | | '_ \\ / __| |/ _` |/ _ \\ '_ \\ / __| |/ _` / __|\n";
     std::cout << "\t  ___) | \\__ \\ ||  __/ | | | | | (_| | | (_| |  __/ | | | | | (__| | (_| |  __/ | | | (__| | (_| \\__ \\\n";
@@ -459,7 +459,7 @@ int main() {
 
     // Control de Entrada y salida
     setColor(1);
-    cout << "\n\tDigite [si] para salir y [no] para reiniciar "; cin >> exit;
+    cout << "\n\t¿Desea salir del programa? [si] para salir y [no] para volver al menu principal: "; cin >> exit;
     if (exit == "si") {
         salir:
         setColor(13);

@@ -43,7 +43,7 @@ _Ilustración 1:_ Diagrama de actividad
 >Administrado con Base de Datos
 
 _Ilustración 2:_ Esquema de base de datos
-![img.png](files/Esquema de BD.png)
+![img.png](files/Esquema%20de%20BD.png)
 
 >[!IMPORTANT]
 > 
