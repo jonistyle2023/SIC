@@ -1,19 +1,34 @@
 //
-// Created by Jonathan David Panchana Rodríguez on 27/3/2025.
+// Initial creation by Jonathan David Panchana Rodríguez on 27/3/2025.
 //
+// You can find the extended version of this project in the following repository: https://github.com/jonistyle2023/SIC
+
+/* Código del proyecto "Sistema de incidencias" del "Grupo E", de la clase "Fundamentos de programación" perteneciente
+ * a la carrera de Software, de la Universidad Estatal Peninsula de Santa Elena (UPSE). */
+
+// Paralelo: Software 2/2
+
+/* Integrantes y Roles:
+ * - Evelyn Yaritza Conforme Choez (Lider)
+ * - Jonathan David Panchana Rodríguez (Desarrollador)
+ * - Joseph Anthony González Perero (Supervisor)
+ * - Deivy Anthony Prudente Merejildo (Editor)
+ * - Katherine Villón Soriano (Diseñadora)
+ * - Carlos Andrés Reyes Escalante (Tester) */
+
+// IDEs used: Clion, Visual Studio Code, Dev-C++ & Code::Blocks
 
 // Bloque de declaraciones
 // Declaramos las librerías necesarias para el programa
 #include <iostream>
-#include <limits>
 #include <iomanip>
 #include <string>
 
 // Librerias para hacer uso de las tildes
 /* ADVERTENCIA: Si no compila en Windows o algún compilador online,
- * comenta o elimina estas dos librerías */
+ * COMENTA O ELIMINA ESTAS LIBRERÍAS */
 #include <clocale> // Elimina o comenta esta línea si no compila
-#include <windows.h> // Elimina o comenta esta línea si no compila
+#include <windows.h> // Elimína o comenta esta línea si no compila
 
 // Espacio de nombres
 using namespace std;
@@ -51,6 +66,18 @@ Usuario usuarios[MAX_USUARIOS];
 int totalIncidencias = 0;
 int totalUsuarios = 0;
 
+// Esta función hace de contador para el número de incidencias y usuarios registrados.
+void mostrarContadores() {
+    setColor(11); // Color para destacar el texto, los encontrarán a lo largo del código
+    cout << "\n\t+-----------------------------------+\n";
+    cout << "\t|   ESTADÍSTICAS DEL SISTEMA        |\n";
+    cout << "\t+-----------------------------------+\n";
+    cout << "\t| Incidencias registradas: " << totalIncidencias << "\t----|\n";
+    cout << "\t| Usuarios registrados:    " << totalUsuarios << "\t----|\n";
+    cout << "\t+-----------------------------------+\n";
+    setColor(7); // Restaurar color por defecto
+}
+
 // Funciones para manejar incidencias y usuarios
 
 // Función para registrar una nueva incidencia
@@ -62,15 +89,15 @@ void registrarIncidencia() {
 
     Incidencia nuevaIncidencia;
     nuevaIncidencia.id = totalIncidencias + 1; // Asignar ID automáticamente
-    cout << "Título: ";
+    cout << "\tTítulo: ";
     cin.ignore();
     getline(cin, nuevaIncidencia.titulo);
-    cout << "Descripción: ";
+    cout << "\tDescripción: ";
     getline(cin, nuevaIncidencia.descripcion);
-    cout << "Ubicación: ";
+    cout << "\tUbicación: ";
     getline(cin, nuevaIncidencia.ubicacion);
 
-    cout << "Tipo de incidencia (1: Avería pública, 2: Siniestro vehicular, 3: Incendio, 4: Robo, 5: Otro): ";
+    cout << "\tTipo de incidencia (1: Avería pública, 2: Siniestro vehicular, 3: Incendio, 4: Robo, 5: Otro): ";
     int tipo;
     cin >> tipo;
     switch (tipo) {
@@ -82,21 +109,23 @@ void registrarIncidencia() {
         default: cout << "Tipo inválido." << endl; return;
     }
 
-    cout << "ID del usuario que reporta: ";
+    cout << "\tID del usuario que reporta: ";
     cin >> nuevaIncidencia.usuario_id;
 
     nuevaIncidencia.estado = "pendiente";
     incidencias[totalIncidencias++] = nuevaIncidencia;
 
-    cout << "¡Incidencia registrada exitosamente! El ID asignado es: " << nuevaIncidencia.id << endl;
+    setColor(10);
+    cout << "\t¡Incidencia registrada exitosamente! El ID asignado es: " << nuevaIncidencia.id << endl;
 }
 
 // Función para mostrar todas las incidencias registradas
 void listarIncidencias() {
+    setColor(5);
     cout << "+--------+----------------------+----------------------+----------------------+----------------------+----------+" << endl;
     cout << "|   ID   |        Título        |     Descripción      |         Tipo         |      Ubicación       |  Estado  |" << endl;
     cout << "+--------+----------------------+----------------------+----------------------+----------------------+----------+" << endl;
-
+    setColor(7);
     for (int i = 0; i < totalIncidencias; i++) {
         cout << "| " << left << setw(6) << incidencias[i].id << " | "
              << setw(20) << incidencias[i].titulo << " | "
@@ -111,75 +140,139 @@ void listarIncidencias() {
 // Función para modificar una incidencia
 void modificarIncidencia() {
     int id;
-    cout << "Digite el ID de la incidencia a modificar: ";
+    cout << "\tDigite el ID de la incidencia a modificar: ";
     cin >> id;
 
     // Buscar la incidencia por ID
     for (int i = 0; i < totalIncidencias; i++) {
         if (incidencias[i].id == id) {
-            cout << "Incidencia encontrada. Puede modificar los siguientes campos:" << endl;
+            setColor(10);
+            cout << "\tIncidencia encontrada." << endl;
 
-            // Mostrar los datos actuales
-            cout << "Título actual: " << incidencias[i].titulo << endl;
-            cout << "Nuevo título (deje vacío para no modificar): ";
-            cin.ignore();
-            string nuevoTitulo;
-            getline(cin, nuevoTitulo);
-            if (!nuevoTitulo.empty()) {
-                incidencias[i].titulo = nuevoTitulo;
+            // Preguntar al usuario qué desea modificar
+            int opcion;
+            setColor(7);
+            cout << "\n\t¿Qué desea modificar?" << endl;
+            cout << "\t1. Solo el estado de la incidencia" << endl;
+            cout << "\t2. Toda la información de la incidencia" << endl;
+            cout << "\n\tSeleccione una opción (1 o 2): ";
+            cin >> opcion;
+            if (opcion == 1) {
+                // Actualizar solo el estado
+                setColor(14);
+                cout << "\tEstado actual: " << incidencias[i].estado << endl;
+
+                int nuevoEstado;
+                do {
+                    setColor(7);
+                    cout << "\tSeleccione el nuevo estado:" << endl;
+                    cout << "\t1. Pendiente" << endl;
+                    cout << "\t2. En progreso" << endl;
+                    cout << "\t3. Resuelto" << endl;
+                    cout << "\n\tOpción (1-3): ";
+                    cin >> nuevoEstado;
+
+                    switch (nuevoEstado) {
+                        case 1: incidencias[i].estado = "pendiente"; break;
+                        case 2: incidencias[i].estado = "en progreso"; break;
+                        case 3: incidencias[i].estado = "resuelto"; break;
+                        default:
+                            setColor(12);
+                            cout << "\tOpción inválida. Intente nuevamente." << endl;
+                            continue;
+                    }
+                    break;
+
+                } while (true);
+
+                setColor(10);
+                cout << "\t¡Estado de la incidencia actualizado con éxito!" << endl;
+            } else if (opcion == 2) {
+                // Actualizar toda la información
+                cout << "\tPuede modificar los siguientes campos:" << endl;
+
+                // Mostrar y modificar los datos actuales
+                cout << "\tTítulo actual: " << incidencias[i].titulo << endl;
+                cout << "\tNuevo título (deje vacío para no modificar): ";
+                cin.ignore();
+                string nuevoTitulo;
+                getline(cin, nuevoTitulo);
+                if (!nuevoTitulo.empty()) {
+                    incidencias[i].titulo = nuevoTitulo;
+                }
+
+                cout << "\tDescripción actual: " << incidencias[i].descripcion << endl;
+                cout << "\tNueva descripción (deje vacío para no modificar): ";
+                string nuevaDescripcion;
+                getline(cin, nuevaDescripcion);
+                if (!nuevaDescripcion.empty()) {
+                    incidencias[i].descripcion = nuevaDescripcion;
+                }
+
+                cout << "\tUbicación actual: " << incidencias[i].ubicacion << endl;
+                cout << "\tNueva ubicación (deje vacío para no modificar): ";
+                string nuevaUbicacion;
+                getline(cin, nuevaUbicacion);
+                if (!nuevaUbicacion.empty()) {
+                    incidencias[i].ubicacion = nuevaUbicacion;
+                }
+
+                cout << "\tTipo de incidencia actual: " << incidencias[i].tipo_incidencia << endl;
+                cout << "\tNuevo tipo de incidencia (1: Avería pública, 2: Siniestro vehicular, 3: Incendio, 4: Robo, 5: Otro): ";
+                int nuevoTipo;
+                cin >> nuevoTipo;
+                switch (nuevoTipo) {
+                    case 1: incidencias[i].tipo_incidencia = "averia_publica"; break;
+                    case 2: incidencias[i].tipo_incidencia = "siniestro_vehicular"; break;
+                    case 3: incidencias[i].tipo_incidencia = "incendio"; break;
+                    case 4: incidencias[i].tipo_incidencia = "robo"; break;
+                    case 5: incidencias[i].tipo_incidencia = "otro"; break;
+                    default: cout << "Tipo no modificado." << endl; break;
+                }
+
+                setColor(14);
+                cout << "\tEstado actual: " << incidencias[i].estado << endl;
+
+                int nuevoEstado;
+                do {
+                    cout << "\tSeleccione el nuevo estado:" << endl;
+                    cout << "\t1. Pendiente" << endl;
+                    cout << "\t2. En progreso" << endl;
+                    cout << "\t3. Resuelto" << endl;
+                    cout << "\tOpción (1-3): ";
+                    cin >> nuevoEstado;
+
+                    switch (nuevoEstado) {
+                        case 1: incidencias[i].estado = "pendiente"; break;
+                        case 2: incidencias[i].estado = "en progreso"; break;
+                        case 3: incidencias[i].estado = "resuelto"; break;
+                        default:
+                            setColor(12);
+                            cout << "\tOpción inválida. Intente nuevamente." << endl;
+                            continue;
+                    }
+                    break;
+                } while (true);
+
+                setColor(10);
+                cout << "\t¡Incidencia modificada con éxito!" << endl;
+            } else {
+                setColor(12);
+                cout << "\tOpción no válida. No se realizaron cambios." << endl;
             }
-
-            cout << "Descripción actual: " << incidencias[i].descripcion << endl;
-            cout << "Nueva descripción (deje vacío para no modificar): ";
-            string nuevaDescripcion;
-            getline(cin, nuevaDescripcion);
-            if (!nuevaDescripcion.empty()) {
-                incidencias[i].descripcion = nuevaDescripcion;
-            }
-
-            cout << "Ubicación actual: " << incidencias[i].ubicacion << endl;
-            cout << "Nueva ubicación (deje vacío para no modificar): ";
-            string nuevaUbicacion;
-            getline(cin, nuevaUbicacion);
-            if (!nuevaUbicacion.empty()) {
-                incidencias[i].ubicacion = nuevaUbicacion;
-            }
-
-            cout << "Tipo de incidencia actual: " << incidencias[i].tipo_incidencia << endl;
-            cout << "Nuevo tipo de incidencia (1: Avería pública, 2: Siniestro vehicular, 3: Incendio, 4: Robo, 5: Otro): ";
-            int nuevoTipo;
-            cin >> nuevoTipo;
-            switch (nuevoTipo) {
-                case 1: incidencias[i].tipo_incidencia = "averia_publica"; break;
-                case 2: incidencias[i].tipo_incidencia = "siniestro_vehicular"; break;
-                case 3: incidencias[i].tipo_incidencia = "incendio"; break;
-                case 4: incidencias[i].tipo_incidencia = "robo"; break;
-                case 5: incidencias[i].tipo_incidencia = "otro"; break;
-                default: cout << "Tipo no modificado." << endl; break;
-            }
-
-            cout << "Estado actual: " << incidencias[i].estado << endl;
-            cout << "Nuevo estado (pendiente, en progreso, resuelto): ";
-            string nuevoEstado;
-            cin.ignore();
-            getline(cin, nuevoEstado);
-            if (!nuevoEstado.empty()) {
-                incidencias[i].estado = nuevoEstado;
-            }
-
-            cout << "¡Incidencia modificada con éxito!" << endl;
             return;
         }
     }
 
     // Si no se encuentra la incidencia
+    setColor(12);
     cout << "Incidencia no encontrada." << endl;
 }
 
 // Función para eliminar una incidencia
 void eliminarIncidencia() {
     int id;
-    cout << "Digite el ID de la incidencia a eliminar: ";
+    cout << "\tDigite el ID de la incidencia a eliminar: ";
     cin >> id;
 
     for (int i = 0; i < totalIncidencias; i++) {
@@ -188,11 +281,13 @@ void eliminarIncidencia() {
                 incidencias[j] = incidencias[j + 1];
             }
             totalIncidencias--;
-            cout << "Incidencia eliminada con éxito." << endl;
+            setColor(10);
+            cout << "\tIncidencia eliminada con éxito." << endl;
             return;
         }
     }
-    cout << "Incidencia no encontrada." << endl;
+    setColor(4);
+    cout << "\tIncidencia no encontrada." << endl;
 }
 
 // Función para registrar un nuevo usuario
@@ -204,22 +299,23 @@ void registrarUsuario() {
 
     Usuario nuevoUsuario;
     nuevoUsuario.id = totalUsuarios + 1; // Asignar ID automáticamente
-    cout << "Nombre: ";
+    cout << "\tNombre: ";
     cin.ignore();
     getline(cin, nuevoUsuario.nombre);
-    cout << "Email: ";
+    cout << "\tEmail: ";
     getline(cin, nuevoUsuario.email);
-    cout << "Contraseña: ";
+    cout << "\tContraseña: ";
     getline(cin, nuevoUsuario.contrasena);
 
-    cout << "Rol (1: Ciudadano, 2: Administrador): ";
+    cout << "\tRol (1: Ciudadano, 2: Administrador): ";
     int rol;
     cin >> rol;
     nuevoUsuario.rol = (rol == 1) ? "ciudadano" : "administrador";
 
     usuarios[totalUsuarios++] = nuevoUsuario;
 
-    cout << "¡Usuario registrado exitosamente!" << endl;
+    setColor(10);
+    cout << "\t¡Usuario registrado exitosamente!, ID Asignado: " << nuevoUsuario.id << endl;
 }
 
 // Función principal
@@ -235,24 +331,33 @@ int main() {
     SetConsoleCP(65001);       // Elimina o comenta esta línea si no compila
     setlocale(LC_ALL, "es_ES.UTF-8"); // Elimina o comenta esta línea si no compila
 
-    int op;
+    setColor(10);
+    cout << "\n\tHola Papu! Bienvenido al Sistema de Incidencias del Municipio de Salinas." << endl;
+    setColor(4);
+    cout << "\t¡Recuerda Primero registrate en el sistema para hacer tu denuncia!" << endl;
 
+    int op;
     do {
+        // Función matemática para calcular el número de incidencias y usuarios
+        mostrarContadores();
         setColor(14);
-        cout << "\n+-----------------------------+\n";
-        cout << "|            MENU             |\n";
-        cout << "+-----------------------------+\n";
-        cout << "| 1 | Registrar incidencia    |\n";
-        cout << "| 2 | Incidencias Registradas |\n";
-        cout << "| 3 | Actualizar incidencias  |\n";
-        cout << "| 4 | Eliminar incidencias    |\n";
-        cout << "| 5 | Registrar usuario       |\n";
+        cout << "\n\t+-----------------------------+\n";
+        cout << "\t|            MENU             |\n";
+        cout << "\t+-----------------------------+\n";
+        setColor(3);
+        cout << "\t| 1 | Registrar incidencia    |\n";
+        setColor(14);
+        cout << "\t| 2 | Incidencias Registradas |\n";
+        cout << "\t| 3 | Actualizar incidencias  |\n";
+        cout << "\t| 4 | Eliminar incidencias    |\n";
+        setColor(3);
+        cout << "\t| 5 | Registrar usuario       |\n";
         setColor(12);
-        cout << "| 6 | Salir                   |\n";
+        cout << "\t| 6 | Salir                   |\n";
         setColor(14);
-        cout << "+-----------------------------+\n";
+        cout << "\t+-----------------------------+\n";
         setColor(7);
-        cout << "Seleccione una opción: ";
+        cout << "\n\tSeleccione una opción: ";
         cin >> op;
 
         switch (op) {
@@ -261,7 +366,7 @@ int main() {
             case 3: modificarIncidencia(); break;
             case 4: eliminarIncidencia(); break;
             case 5: registrarUsuario(); break;
-            case 6: cout << "Saliendo..." << endl; break;
+            case 6: cout << "Gracias! Vuelva Pronto..." << endl; break;
             default: cout << "Opción no válida." << endl; break;
         }
     } while (op != 6);
