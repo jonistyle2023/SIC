@@ -1,4 +1,0 @@
-C:/Users/jonat/CLionProjects/SIC/cmake-build-debug/CMakeFiles/SIC.dir
-C:/Users/jonat/CLionProjects/SIC/cmake-build-debug/CMakeFiles/withArrays.dir
-C:/Users/jonat/CLionProjects/SIC/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/jonat/CLionProjects/SIC/cmake-build-debug/CMakeFiles/rebuild_cache.dir

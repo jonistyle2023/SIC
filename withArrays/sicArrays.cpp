@@ -3,7 +3,7 @@
 //
 // You can find the extended version of this project in the following repository: https://github.com/jonistyle2023/SIC
 
-/* Código del proyecto "Sistema de incidencias" del "Grupo E", de la clase "Fundamentos de programación" perteneciente
+/* Código del proyecto "Registro de Alertas Comunitarias" del "Grupo E", de la clase "Fundamentos de programación" perteneciente
  * a la carrera de Software, de la Universidad Estatal Peninsula de Santa Elena (UPSE). */
 
 // Paralelo: Software 2/2
@@ -101,12 +101,18 @@ void registrarIncidencia() {
     int tipo;
     cin >> tipo;
     switch (tipo) {
-        case 1: nuevaIncidencia.tipo_incidencia = "averia_publica"; break;
-        case 2: nuevaIncidencia.tipo_incidencia = "siniestro_vehicular"; break;
-        case 3: nuevaIncidencia.tipo_incidencia = "incendio"; break;
-        case 4: nuevaIncidencia.tipo_incidencia = "robo"; break;
-        case 5: nuevaIncidencia.tipo_incidencia = "otro"; break;
-        default: cout << "Tipo inválido." << endl; return;
+        case 1: nuevaIncidencia.tipo_incidencia = "averia_publica";
+            break;
+        case 2: nuevaIncidencia.tipo_incidencia = "siniestro_vehicular";
+            break;
+        case 3: nuevaIncidencia.tipo_incidencia = "incendio";
+            break;
+        case 4: nuevaIncidencia.tipo_incidencia = "robo";
+            break;
+        case 5: nuevaIncidencia.tipo_incidencia = "otro";
+            break;
+        default: cout << "Tipo inválido." << endl;
+            return;
     }
 
     cout << "\tID del usuario que reporta: ";
@@ -122,18 +128,26 @@ void registrarIncidencia() {
 // Función para mostrar todas las incidencias registradas
 void listarIncidencias() {
     setColor(5);
-    cout << "+--------+----------------------+----------------------+----------------------+----------------------+----------+" << endl;
-    cout << "|   ID   |        Título        |     Descripción      |         Tipo         |      Ubicación       |  Estado  |" << endl;
-    cout << "+--------+----------------------+----------------------+----------------------+----------------------+----------+" << endl;
+    cout <<
+            "+--------+----------------------+----------------------+----------------------+----------------------+----------+"
+            << endl;
+    cout <<
+            "|   ID   |        Título        |     Descripción      |         Tipo         |      Ubicación       |  Estado  |"
+            << endl;
+    cout <<
+            "+--------+----------------------+----------------------+----------------------+----------------------+----------+"
+            << endl;
     setColor(7);
     for (int i = 0; i < totalIncidencias; i++) {
         cout << "| " << left << setw(6) << incidencias[i].id << " | "
-             << setw(20) << incidencias[i].titulo << " | "
-             << setw(20) << incidencias[i].descripcion << " | "
-             << setw(20) << incidencias[i].tipo_incidencia << " | "
-             << setw(20) << incidencias[i].ubicacion << " | "
-             << setw(8) << incidencias[i].estado << " |" << endl;
-        cout << "+--------+----------------------+----------------------+----------------------+----------------------+----------+" << endl;
+                << setw(20) << incidencias[i].titulo << " | "
+                << setw(20) << incidencias[i].descripcion << " | "
+                << setw(20) << incidencias[i].tipo_incidencia << " | "
+                << setw(20) << incidencias[i].ubicacion << " | "
+                << setw(8) << incidencias[i].estado << " |" << endl;
+        cout <<
+                "+--------+----------------------+----------------------+----------------------+----------------------+----------+"
+                << endl;
     }
 }
 
@@ -173,16 +187,18 @@ void modificarIncidencia() {
                     cin >> nuevoEstado;
 
                     switch (nuevoEstado) {
-                        case 1: incidencias[i].estado = "pendiente"; break;
-                        case 2: incidencias[i].estado = "en progreso"; break;
-                        case 3: incidencias[i].estado = "resuelto"; break;
+                        case 1: incidencias[i].estado = "pendiente";
+                            break;
+                        case 2: incidencias[i].estado = "en progreso";
+                            break;
+                        case 3: incidencias[i].estado = "resuelto";
+                            break;
                         default:
                             setColor(12);
                             cout << "\tOpción inválida. Intente nuevamente." << endl;
                             continue;
                     }
                     break;
-
                 } while (true);
 
                 setColor(10);
@@ -218,16 +234,23 @@ void modificarIncidencia() {
                 }
 
                 cout << "\tTipo de incidencia actual: " << incidencias[i].tipo_incidencia << endl;
-                cout << "\tNuevo tipo de incidencia (1: Avería pública, 2: Siniestro vehicular, 3: Incendio, 4: Robo, 5: Otro): ";
+                cout <<
+                        "\tNuevo tipo de incidencia (1: Avería pública, 2: Siniestro vehicular, 3: Incendio, 4: Robo, 5: Otro): ";
                 int nuevoTipo;
                 cin >> nuevoTipo;
                 switch (nuevoTipo) {
-                    case 1: incidencias[i].tipo_incidencia = "averia_publica"; break;
-                    case 2: incidencias[i].tipo_incidencia = "siniestro_vehicular"; break;
-                    case 3: incidencias[i].tipo_incidencia = "incendio"; break;
-                    case 4: incidencias[i].tipo_incidencia = "robo"; break;
-                    case 5: incidencias[i].tipo_incidencia = "otro"; break;
-                    default: cout << "Tipo no modificado." << endl; break;
+                    case 1: incidencias[i].tipo_incidencia = "averia_publica";
+                        break;
+                    case 2: incidencias[i].tipo_incidencia = "siniestro_vehicular";
+                        break;
+                    case 3: incidencias[i].tipo_incidencia = "incendio";
+                        break;
+                    case 4: incidencias[i].tipo_incidencia = "robo";
+                        break;
+                    case 5: incidencias[i].tipo_incidencia = "otro";
+                        break;
+                    default: cout << "Tipo no modificado." << endl;
+                        break;
                 }
 
                 setColor(14);
@@ -243,9 +266,12 @@ void modificarIncidencia() {
                     cin >> nuevoEstado;
 
                     switch (nuevoEstado) {
-                        case 1: incidencias[i].estado = "pendiente"; break;
-                        case 2: incidencias[i].estado = "en progreso"; break;
-                        case 3: incidencias[i].estado = "resuelto"; break;
+                        case 1: incidencias[i].estado = "pendiente";
+                            break;
+                        case 2: incidencias[i].estado = "en progreso";
+                            break;
+                        case 3: incidencias[i].estado = "resuelto";
+                            break;
                         default:
                             setColor(12);
                             cout << "\tOpción inválida. Intente nuevamente." << endl;
@@ -320,7 +346,6 @@ void registrarUsuario() {
 
 // Función principal
 int main() {
-
     /* ADVERTENCIA:
      * Configuración de la consola para permitir el uso de caracteres UTF-8
      * y establecer la localización a español.
@@ -328,11 +353,11 @@ int main() {
      */
 
     SetConsoleOutputCP(65001); // Elimina o comenta esta línea si no compila
-    SetConsoleCP(65001);       // Elimina o comenta esta línea si no compila
+    SetConsoleCP(65001); // Elimina o comenta esta línea si no compila
     setlocale(LC_ALL, "es_ES.UTF-8"); // Elimina o comenta esta línea si no compila
 
     setColor(10);
-    cout << "\n\tHola Papu! Bienvenido al Sistema de Incidencias del Municipio de Salinas." << endl;
+    cout << "\n\tBienvenido al Sistema de Incidencias del Municipio de Salinas." << endl;
     setColor(4);
     cout << "\t¡Recuerda Primero registrate en el sistema para hacer tu denuncia!" << endl;
 
@@ -361,13 +386,20 @@ int main() {
         cin >> op;
 
         switch (op) {
-            case 1: registrarIncidencia(); break;
-            case 2: listarIncidencias(); break;
-            case 3: modificarIncidencia(); break;
-            case 4: eliminarIncidencia(); break;
-            case 5: registrarUsuario(); break;
-            case 6: cout << "Gracias! Vuelva Pronto..." << endl; break;
-            default: cout << "Opción no válida." << endl; break;
+            case 1: registrarIncidencia();
+                break;
+            case 2: listarIncidencias();
+                break;
+            case 3: modificarIncidencia();
+                break;
+            case 4: eliminarIncidencia();
+                break;
+            case 5: registrarUsuario();
+                break;
+            case 6: cout << "\tGracias! Vuelva Pronto..." << endl;
+                break;
+            default: cout << "\tOpción no válida." << endl;
+                break;
         }
     } while (op != 6);
 
