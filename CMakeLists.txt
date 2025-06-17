@@ -11,13 +11,13 @@ include_directories(${CMAKE_SOURCE_DIR}/SicFpProject/include)
 add_executable(SIC main.cpp)
 
 # Enlazar la biblioteca MySQL
-target_link_libraries(SIC libmysql)
+target_link_libraries(SIC libmysql ws2_32 winmm)
 
-# Ejecutable del programa con Arrays
-add_executable(withArrays
-        SicFpProject/main.cpp
+# Ejecutable del proyecto de fundamentos de programación
+add_executable(SicFpProject
+        SicFpProject/mainFp.cpp
         SicFpProject/functions/functions.cpp
         SicFpProject/functions/consola.cpp
         SicFpProject/functions/archivesManager.cpp
 )
-target_link_libraries(withArrays libmysql ws2_32 winmm)
+target_link_libraries(SicFpProject libmysql ws2_32 winmm)

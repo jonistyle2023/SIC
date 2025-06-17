@@ -1,17 +1,14 @@
-//
-// Created by Jonathan Panchana Rodríguez on 13/6/2025.
-//
-
-/*NOTA: Esta clase declara el prototipo de la función setColor y las dependencias necesarias para
- * su implementación.
- */
-
 #ifndef CONSOLA_H
 #define CONSOLA_H
 
+// Evitar conflictos con macros de Windows
+#define NOMINMAX
+#define WIN32_LEAN_AND_MEAN
+
 #include <windows.h>
+#include <iostream>
 
-// Prototipo de la función
-void setColor(const int color);
+// Declaración de la función para cambiar el color de la consola
+void setColor(int color);
 
-#endif //CONSOLA_H
+#endif // CONSOLA_H

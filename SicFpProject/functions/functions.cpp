@@ -324,3 +324,4 @@ void registrarUsuario() {
     setColor(10);
     cout << "\t¡Usuario registrado exitosamente!, ID Asignado: " << nuevoUsuario.id << endl;
 }
+
