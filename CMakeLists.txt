@@ -16,8 +16,5 @@ target_link_libraries(SIC libmysql ws2_32 winmm)
 # Ejecutable del proyecto de fundamentos de programación
 add_executable(SicFpProject
         SicFpProject/mainFp.cpp
-        SicFpProject/functions/functions.cpp
-        SicFpProject/functions/consola.cpp
-        SicFpProject/functions/archivesManager.cpp
 )
 target_link_libraries(SicFpProject libmysql ws2_32 winmm)
