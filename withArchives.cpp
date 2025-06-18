@@ -23,6 +23,15 @@
 
 // IDEs used: Clion, Visual Studio Code, Dev-C++ & Code::Blocks
 
+/* ADVERTENCIA: Como este programa usa ARCHIVOS, asegúrate de actualizar las rutas correctas, según la ubicación de la carpeta
+ * que contenga los archivos de datos. En este caso, los archivos se encuentran en la carpeta "files" dentro del directorio del proyecto,
+ * Por defecto están en:
+ * - ../files/incidencias.csv
+ * - ../files/usuarios.csv
+ * Puedes probar la connexión con la función 'mostrarContadoresA()' que muestra el número de incidencias y usuarios registrados.
+ * ¡Asegúrate de que estos archivos existan y tengan el formato correcto antes de ejecutar el programa!.
+ */
+
 // BLOQUE DE DECLARACIONES
 // Librerías necesarias para el programa
 #include <iostream>
@@ -247,9 +256,10 @@ void listarIncidenciasA() {
 }
 
 // Función para modificar una incidencia
-void modificarIncidenciaA() {
+void modificarIncidenciaA(const string &rol) {
     ifstream archivoEntrada("../files/incidencias.csv");
     if (!archivoEntrada.is_open()) {
+        setColor(12);
         cout << "No se pudo abrir el archivo de incidencias." << endl;
         return;
     }
@@ -263,33 +273,73 @@ void modificarIncidenciaA() {
     bool encontrado = false;
     while (getline(archivoEntrada, linea)) {
         stringstream ss(linea);
-        string idStr;
+        string idStr, titulo, descripcion, tipo_incidencia, ubicacion, estado, usuario_id;
         getline(ss, idStr, ',');
+        getline(ss, titulo, ',');
+        getline(ss, descripcion, ',');
+        getline(ss, tipo_incidencia, ',');
+        getline(ss, ubicacion, ',');
+        getline(ss, estado, ',');
+        getline(ss, usuario_id, ',');
+
         id = stoi(idStr);
 
         if (id == idBuscado) {
-            string usuario_id;
-            string estado;
-            string ubicacion;
-            string tipo_incidencia;
-            string descripcion;
-            string titulo;
             encontrado = true;
-            cout << "\tIncidencia encontrada. Modifique los campos:\n";
 
-            cout << "\tNuevo título: ";
-            cin.ignore();
-            getline(cin, titulo);
-            cout << "\tNueva descripción: ";
-            getline(cin, descripcion);
-            cout << "\tNueva ubicación: ";
-            getline(cin, ubicacion);
-            cout << "\tNuevo estado (pendiente, en progreso, resuelto): ";
-            getline(cin, estado);
+            if (rol == "ciudadano") {
+                setColor(10);
+                cout << "\tIncidencia encontrada. Modifique los campos:\n";
+                setColor(14);
+                cout << "\n\tNuevo título: ";
+                cin.ignore();
+                getline(cin, titulo);
+                cout << "\tNueva descripción: ";
+                getline(cin, descripcion);
+                cout << "\tNueva ubicación: ";
+                getline(cin, ubicacion);
 
-            string nuevaLinea = to_string(id) + "," + titulo + "," + descripcion + "," + tipo_incidencia + "," +
-                                ubicacion + "," + estado + "," + usuario_id;
-            lineas.push_back(nuevaLinea);
+                string nuevaLinea = idStr + "," + titulo + "," + descripcion + "," + tipo_incidencia + "," +
+                                    ubicacion + "," + estado + "," + usuario_id;
+                lineas.push_back(nuevaLinea);
+            } else if (rol == "administrador") {
+                int opcionAdmin;
+                setColor(10);
+                cout << "\tIncidencia encontrada. Seleccione una opción:\n";
+                setColor(14);
+                cout << "\t1. Actualizar datos de la incidencia\n";
+                cout << "\t2. Actualizar el estado\n";
+                cout << "\tOpción: ";
+                cin >> opcionAdmin;
+
+                if (opcionAdmin == 1) {
+                    cout << "\tNuevo título: ";
+                    cin.ignore();
+                    getline(cin, titulo);
+                    cout << "\tNueva descripción: ";
+                    getline(cin, descripcion);
+                    cout << "\tNueva ubicación: ";
+                    getline(cin, ubicacion);
+                    cout << "\tNuevo estado (pendiente, en progreso, resuelto): ";
+                    getline(cin, estado);
+
+                    string nuevaLinea = idStr + "," + titulo + "," + descripcion + "," + tipo_incidencia + "," +
+                                        ubicacion + "," + estado + "," + usuario_id;
+                    lineas.push_back(nuevaLinea);
+                } else if (opcionAdmin == 2) {
+                    cout << "\tNuevo estado (pendiente, en progreso, resuelto): ";
+                    cin.ignore();
+                    getline(cin, estado);
+
+                    string nuevaLinea = idStr + "," + titulo + "," + descripcion + "," + tipo_incidencia + "," +
+                                        ubicacion + "," + estado + "," + usuario_id;
+                    lineas.push_back(nuevaLinea);
+                } else {
+                    setColor(12);
+                    cout << "\tOpción no válida." << endl;
+                    lineas.push_back(linea); // Mantener la línea original
+                }
+            }
         } else {
             lineas.push_back(linea);
         }
@@ -297,6 +347,7 @@ void modificarIncidenciaA() {
     archivoEntrada.close();
 
     if (!encontrado) {
+        setColor(12);
         cout << "\tIncidencia no encontrada." << endl;
         return;
     }
@@ -306,6 +357,7 @@ void modificarIncidenciaA() {
         archivoSalida << l << "\n";
     }
     archivoSalida.close();
+    setColor(10);
     cout << "\t¡Incidencia modificada con éxito!" << endl;
 }
 
@@ -366,8 +418,8 @@ void menuCiudadano(const int usuario_id) {
         setColor(14);
         cout << "\t| 2 | Listar incidencias      |\n";
         cout << "\t| 3 | Modificar incidencia    |\n";
-        setColor(12);
-        cout << "\t| 4 | Salir                   |\n";
+        setColor(5);
+        cout << "\t| 4 | volver al inicio <-     |\n";
         setColor(14);
         cout << "\t+-----------------------------+\n";
         setColor(7);
@@ -387,7 +439,7 @@ void menuCiudadano(const int usuario_id) {
                 break;
             case 2: listarIncidenciasA();
                 break;
-            case 3: modificarIncidenciaA();
+            case 3: modificarIncidenciaA("ciudadano");
                 break;
             case 4: setColor(10);
                 cout << "\tSaliendo del menú ciudadano..." << endl;
@@ -407,13 +459,14 @@ void menuAdministrador() {
         cout << "\n\t+-----------------------------+\n";
         cout << "\t|      MENU ADMINISTRADOR     |\n";
         cout << "\t+-----------------------------+\n";
+        setColor(3);
         cout << "\t| 1 | Modificar incidencia    |\n";
         setColor(12);
         cout << "\t| 2 | Eliminar incidencia     |\n";
         setColor(14);
         cout << "\t| 3 | Listar incidencias      |\n";
-        setColor(12);
-        cout << "\t| 4 | Salir                   |\n";
+        setColor(5);
+        cout << "\t| 4 | Volver al Inicio <-     |\n";
         setColor(14);
         cout << "\t+-----------------------------+\n";
         setColor(7);
@@ -421,7 +474,7 @@ void menuAdministrador() {
         cin >> op;
 
         switch (op) {
-            case 1: modificarIncidenciaA();
+            case 1: modificarIncidenciaA("administrador");
                 break;
             case 2: eliminarIncidenciaA();
                 break;
@@ -462,8 +515,10 @@ void mostrarContadoresA() {
     cout << "\n\t+-----------------------------------+\n";
     cout << "\t|   ESTADÍSTICAS DEL SISTEMA        |\n";
     cout << "\t+-----------------------------------+\n";
+    setColor(6);
     cout << "\t| Incidencias registradas: " << totalIncidencias << "\t----|\n";
     cout << "\t| Usuarios registrados:    " << totalUsuarios << "\t----|\n";
+    setColor(11);
     cout << "\t+-----------------------------------+\n";
     setColor(7); // Restaurar color por DEFECTO
 }
@@ -492,7 +547,7 @@ int main() {
         setColor(3);
         cout << "\t| 2 | Registrar usuario       |\n";
         setColor(12);
-        cout << "\t| 3 | Salir                   |\n";
+        cout << "\t| 3 | Salir del programa      |\n";
         setColor(14);
         cout << "\t+-----------------------------+\n";
         setColor(7);
