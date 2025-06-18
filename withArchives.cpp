@@ -58,7 +58,7 @@ bool autenticarUsuario(string &rol) {
     cout << "\tContraseña: ";
     cin >> contrasena;
 
-    ifstream archivo("../SicFpProject/data/usuarios.csv");
+    ifstream archivo("../files/usuarios.csv");
     if (!archivo.is_open()) {
         setColor(12);
         cout << "\tError al abrir el archivo de usuarios." << endl;
@@ -92,13 +92,13 @@ bool autenticarUsuario(string &rol) {
 
 // Función para registrar un nuevo usuario
 void registrarUsuarioA() {
-    ofstream archivo("../SicFpProject/data/usuarios.csv", ios::app);
+    ofstream archivo("../files/usuarios.csv", ios::app);
     if (!archivo.is_open()) {
         cout << "\tNo se pudo abrir el archivo de usuarios." << endl;
         return;
     }
 
-    const int id = contarRegistros("../SicFpProject/data/usuarios.csv") + 1;
+    const int id = contarRegistros("../files/usuarios.csv") + 1;
     string nombre, email, contrasena;
     int tipoRol;
 
@@ -123,7 +123,7 @@ void registrarUsuarioA() {
 
 // Función para obtener el ID del usuario a partir del email para su registro
 int obtenerUsuarioId(const string &email) {
-    ifstream archivo("../SicFpProject/data/usuarios.csv");
+    ifstream archivo("../files/usuarios.csv");
     if (!archivo.is_open()) {
         cout << "Error al abrir el archivo de usuarios." << endl;
         return -1;
@@ -153,14 +153,14 @@ int obtenerUsuarioId(const string &email) {
 
 // Función para registrar una nueva incidencia
 void registrarIncidenciaA(const int usuario_id) {
-    ofstream archivo("../SicFpProject/data/incidencias.csv", ios::app);
+    ofstream archivo("../files/incidencias.csv", ios::app);
     if (!archivo.is_open()) {
         setColor(12);
         cout << "No se pudo abrir el archivo de incidencias." << endl;
         return;
     }
 
-    const int id = contarRegistros("../SicFpProject/data/incidencias.csv") + 1;
+    const int id = contarRegistros("../files/incidencias.csv") + 1;
     string titulo, descripcion, ubicacion, tipo_incidencia;
     const string estado = "pendiente";
     int tipo;
@@ -201,7 +201,7 @@ void registrarIncidenciaA(const int usuario_id) {
 
 // Función para listar todas las incidencias
 void listarIncidenciasA() {
-    ifstream archivo("../SicFpProject/data/incidencias.csv");
+    ifstream archivo("../files/incidencias.csv");
     if (!archivo.is_open()) {
         cout << "No se pudo abrir el archivo de incidencias." << endl;
         return;
@@ -248,7 +248,7 @@ void listarIncidenciasA() {
 
 // Función para modificar una incidencia
 void modificarIncidenciaA() {
-    ifstream archivoEntrada("../SicFpProject/data/incidencias.csv");
+    ifstream archivoEntrada("../files/incidencias.csv");
     if (!archivoEntrada.is_open()) {
         cout << "No se pudo abrir el archivo de incidencias." << endl;
         return;
@@ -301,7 +301,7 @@ void modificarIncidenciaA() {
         return;
     }
 
-    ofstream archivoSalida("../SicFpProject/data/incidencias.csv");
+    ofstream archivoSalida("../files/incidencias.csv");
     for (const string &l: lineas) {
         archivoSalida << l << "\n";
     }
@@ -311,7 +311,7 @@ void modificarIncidenciaA() {
 
 // Función para eliminar una incidencia
 void eliminarIncidenciaA() {
-    ifstream archivoEntrada("../SicFpProject/data/incidencias.csv");
+    ifstream archivoEntrada("../files/incidencias.csv");
     if (!archivoEntrada.is_open()) {
         cout << "No se pudo abrir el archivo de incidencias." << endl;
         return;
@@ -343,7 +343,7 @@ void eliminarIncidenciaA() {
         return;
     }
 
-    ofstream archivoSalida("../SicFpProject/data/incidencias.csv");
+    ofstream archivoSalida("../files/incidencias.csv");
     for (const string &l: lineas) {
         archivoSalida << l << "\n";
     }
@@ -454,8 +454,8 @@ int contarRegistros(const string &rutaArchivo) {
 // Función para mostrar contadores de incidencias y usuarios
 void mostrarContadoresA() {
     // Contar registros en los archivos correspondientes
-    const int totalIncidencias = contarRegistros("../SicFpProject/data/incidencias.csv");
-    const int totalUsuarios = contarRegistros("../SicFpProject/data/usuarios.csv");
+    const int totalIncidencias = contarRegistros("../files/incidencias.csv");
+    const int totalUsuarios = contarRegistros("../files/usuarios.csv");
 
     // Mostrar los contadores en un formato visual
     setColor(11); // Color ÚNICAMENTE para destacar el texto
