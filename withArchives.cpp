@@ -21,7 +21,7 @@
  * - Katherine Villón Soriano (Diseñadora)
  * - Carlos Andrés Reyes Escalante (Tester) */
 
-// IDEs used: Clion, Visual Studio Code, Dev-C++ & Code::Blocks
+// IDEs used: Clion, Visual Studio Code, Dev-C++ (V.6.30) & Code::Blocks
 
 /* ADVERTENCIA: Como este programa usa ARCHIVOS, asegúrate de actualizar las rutas correctas, según la ubicación de la carpeta
  * que contenga los archivos de datos. En este caso, los archivos se encuentran en la carpeta "files" dentro del directorio del proyecto,
@@ -156,6 +156,33 @@ int obtenerUsuarioId(const string &email) {
 
     archivo.close();
     return -1; // Retorna -1 si no se encuentra el usuario
+}
+
+string obtenerNombreUsuario(const string &email) {
+    ifstream archivo("../files/usuarios.csv");
+    if (!archivo.is_open()) {
+        cout << "Error al abrir el archivo de usuarios." << endl;
+        return "";
+    }
+
+    string linea;
+    while (getline(archivo, linea)) {
+        stringstream ss(linea);
+        string id, nombre, emailArchivo, contrasena, rol;
+        getline(ss, id, ',');
+        getline(ss, nombre, ',');
+        getline(ss, emailArchivo, ',');
+        getline(ss, contrasena, ',');
+        getline(ss, rol, ',');
+
+        if (email == emailArchivo) {
+            archivo.close();
+            return nombre;
+        }
+    }
+
+    archivo.close();
+    return "Usuario desconocido";
 }
 
 // --- FUNCIONES PARA LA GESTIÓN DE INCIDENCIAS ---
@@ -406,9 +433,13 @@ void eliminarIncidenciaA() {
 // --- FUNCIONES ADICIONALES DEL SISTEMA ---
 
 // Función para mostrar el menú de USUARIOS CON ROL DE CIUDADANO
-void menuCiudadano(const int usuario_id) {
+void menuCiudadano(const int usuario_id, const string &nombre) {
     int op;
     do {
+        setColor(14);
+        cout << "\n\t*******************************************************************************" << endl;
+        setColor(10);
+        cout << "\n\tSesión iniciada como: " << nombre << " (Ciudadano)" << endl;
         setColor(14);
         cout << "\n\t+-----------------------------+\n";
         cout << "\t|       MENU CIUDADANO        |\n";
@@ -452,9 +483,13 @@ void menuCiudadano(const int usuario_id) {
 }
 
 // Función para mostrar el menú de USUARIOS CON ROL DE ADMINISTRADOR
-void menuAdministrador() {
+void menuAdministrador(const string &nombre) {
     int op;
     do {
+        setColor(14);
+        cout << "\n\t*******************************************************************************" << endl;
+        setColor(10);
+        cout << "\n\tSesión iniciada como: " << nombre << " (Administrador)" << endl;
         setColor(14);
         cout << "\n\t+-----------------------------+\n";
         cout << "\t|      MENU ADMINISTRADOR     |\n";
@@ -537,6 +572,8 @@ int main() {
     int op;
     do {
         // Función matemática para calcular el número de incidencias y usuarios
+        setColor(14);
+        cout << "\n\t*******************************************************************************" << endl;
         mostrarContadoresA();
         setColor(14);
         cout << "\n\t+-----------------------------+\n";
@@ -556,16 +593,17 @@ int main() {
 
         switch (op) {
             case 1: {
-                string rol, email;
-                if (autenticarUsuario(rol)) {
+                if (string rol; autenticarUsuario(rol)) {
+                    string email;
                     cout << "\tIngrese su email para identificar su ID: ";
                     cin >> email;
-                    int usuario_id = obtenerUsuarioId(email);
+                    const int usuario_id = obtenerUsuarioId(email);
+                    string nombre = obtenerNombreUsuario(email); // Nueva función para obtener el nombre
                     if (usuario_id != -1) {
                         if (rol == "ciudadano") {
-                            menuCiudadano(usuario_id);
+                            menuCiudadano(usuario_id, nombre);
                         } else if (rol == "administrador") {
-                            menuAdministrador();
+                            menuAdministrador(nombre);
                         } else {
                             cout << "Rol desconocido." << endl;
                         }
